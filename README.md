@@ -1,7 +1,13 @@
 
 # Python Projects
+    
+- converter.py - Converter from `feet` to `[inches, yard, miles, millimeter, centimeter, kilometer, meter]`.
+
+    ![example](/assets/converter.gif)
+
 - mathquiz.py - Simple Math Quiz
 
-- linkedlist.py - Linked-list Data Structure
+    ![example](/assets/mathquiz.gif)
 
-- converter.py - Converter from `feet` to `[inches, yard, miles, millimeter, centimeter, kilometer, meter]`.
+- linkedlist.py - Linked-list Data Structure.
+
