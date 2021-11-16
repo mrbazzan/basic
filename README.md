@@ -11,3 +11,5 @@
 
 - linkedlist.py - Linked-list Data Structure.
 
+# ORM
+This folder contains a basic object relational mapper from scratch.
