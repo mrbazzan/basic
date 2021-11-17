@@ -5,6 +5,7 @@ import inspect
 
 SELECT_TABLE_SQL = "SELECT name FROM sqlite_master WHERE type = 'table';"
 CREATE_TABLE_SQL = "CREATE TABLE {name}( {fields} );"
+INSERT_TABLE_SQL = "INSERT INTO {name}"
 SQLITE_TYPE_MAP = {
     int: "INTEGER",
     float: "REAL",
@@ -28,6 +29,9 @@ class Database:
     def create(self, table):
         self._execute(table.get_create_sql())
 
+    def save(self, instance):
+        self._execute()
+
 
 class Table:
     @classmethod
@@ -48,6 +52,26 @@ class Table:
         fields = [" ".join(x) for x in fields]
         return CREATE_TABLE_SQL.format(name=cls._get_name(), fields=", ".join(fields))
 
+    @classmethod
+    def get_insert_sql(cls):
+        pass
+
+    def __init__(self, **kwargs):
+        self._data = {
+            'id': None
+        }
+        for key, value in kwargs.items():
+            self._data[key] = value
+
+    def __getattribute__(self, key):
+        # return self._data[key]  This returns an error because it calls itself --> RecursionError
+
+        _data = object.__getattribute__(self, '_data')
+        if key in _data:
+            return _data[key]
+
+        return object.__getattribute__(self, key)
+
 
 class Column:
     def __init__(self, type):
@@ -63,18 +87,12 @@ class ForeignKey:
         self.table = table
 
 
-class Post(Table):
-    title = Column(str)
-    body = Column(str)
-
-
 class Author(Table):
     name = Column(str)
     phone_number = Column(int)
-    post = ForeignKey(Post)
 
 
-db = Database('orm.sqlite')
-# db.create(Post)
-# db.create(Author)
-print(db.tables)
+class Post(Table):
+    title = Column(str)
+    body = Column(str)
+    author = ForeignKey(Author)

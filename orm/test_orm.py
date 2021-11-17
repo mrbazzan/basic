@@ -6,15 +6,18 @@ from orm import Database, Table, Column, ForeignKey
 from pathlib import Path
 
 
-class Post(Table):
-    title = Column(str)
-    body = Column(str)
+@pytest.fixture()
+def create_table():
+    class Author(Table):
+        name = Column(str)
+        lucky_number = Column(int)
 
+    class Post(Table):
+        title = Column(str)
+        body = Column(str)
+        author = ForeignKey(Author)
 
-class Author(Table):
-    name = Column(str)
-    phone_number = Column(int)
-    post = ForeignKey(Post)
+    return Post, Author
 
 
 @pytest.fixture()
@@ -30,28 +33,42 @@ class TestDatabase:
     def test_create_file(self, create_file):
         assert isinstance(create_file, Path)
 
-    def test_file(self, create_file):
-        path = Database(create_file)
-        assert isinstance(path.conn, sqlite3.Connection)
+    def test_file(self, create_file, create_table):
+        global db
 
-    def test_creation(self, create_file):
-        path = Database(create_file)
-        assert path.tables == []
+        db = Database(create_file)
+        assert isinstance(db.conn, sqlite3.Connection)
 
-        path.create(Post)
-        assert ('post', ) in path.tables
+        assert db.tables == []
 
-        path.create(Author)
-        assert ('author', ) in path.tables
+        post, author = create_table
+
+        db.create(post)
+        assert ('post', ) in db.tables
+
+        db.create(author)
+        assert ('author', ) in db.tables
 
 
-class TestCreatedTable:
-    def test_table_name(self):
-        assert Post._get_name() == 'post'
-        assert Author._get_name() == 'author'
+class TestCreatedTable(TestDatabase):
+    def test_table_name(self, create_table):
+        post, author = create_table
+        assert post._get_name() == 'post'
+        assert author._get_name() == 'author'
 
-    def test_foreign_key(self):
-        assert 'post_id' in Author.get_create_sql()
+    def test_foreign_key(self, create_table):
+        post, _ = create_table
+        assert 'author_id' in post.get_create_sql()
+
+    def test_create_author_instance(self, create_table):
+        global vince
+
+        _, author = create_table
+        vince = author(name="Vincent", lucky_number=13)
+
+        assert vince.name == "Vincent"
+        assert vince.id is None
+        assert vince.lucky_number == 13
 
 
 class TestColumn:
