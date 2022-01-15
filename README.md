@@ -10,7 +10,3 @@
     ![example](/assets/mathquiz.gif)
 
 - linkedlist.py - Linked-list Data Structure.
-
-# ORM
-This folder contains a basic object relational mapper from scratch.
-It was developed using a TDD(Test Driven Development) approach.

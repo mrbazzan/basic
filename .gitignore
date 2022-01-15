@@ -1,10 +1,4 @@
 
+*.pyc
 .idea/
-.pytest_cache/
-
 __pycache__/
-*pyc
-
-*.sqlite
-
-misc.py
