@@ -1,0 +1,28 @@
+- lcitool: Add subpackage for containers 
+- Add abstract wrapper for docker and podman engine
+- Add Exception handler for container
+- Add exception class variable to container class
+- Add logging for containers subpackage
+- commandline: Addd argument for image to use
+- commandline: Add engine optional argument
+- commandline: Add scratch dir optional argument
+- commandline: Add script optional argument
+- lcitool: Add CONTAINER command
+- containers: Implement “_exec” method
+- container: Implement “check_engine” method
+- lcitool container: Add engines sub-command
+- containers: Get user entry from Unix database
+- add engine arguments for running container
+- add podman-specific user namespace manipulation
+- containers: Add abstract options method
+- containers: Implement “run” method
+- lcitool container: Add “run” subcommand
+- validate CLI arguments for “run&shell” subcommand
+- lcitool container: Add “shell” subcommand
+- containers: Implement “build” method
+- lcitool: Add logic to build container image
+- tests: check container engine subcommand
+- tests: unit test for Container.check_engine
+- tests: unit test for Podman().podman_args
+- tests: unit test for Container.options function
+- docs: documentation for containers
