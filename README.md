@@ -10,3 +10,9 @@
     ![example](/assets/mathquiz.gif)
 
 - linkedlist.py - Linked-list Data Structure.
+
+
+
+# DATA STRUCTURE AND ALGORITHM
+
+- Buying ticket from window problem
