@@ -2,3 +2,15 @@
 *.pyc
 .idea/
 __pycache__/
+
+*.docx
+
+parsefile
+text
+
+*.html
+!mini_app.html
+
+pdf_parser/stevo
+
+venv_pdf/
