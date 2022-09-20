@@ -16,3 +16,9 @@
 # DATA STRUCTURE AND ALGORITHM
 
 - Buying ticket from window problem
+
+
+# Helper
+
+- `helper/` folder contains script I used for formatting a url into a markdown
+
