@@ -22,3 +22,6 @@
 
 - `helper/` folder contains script I used for formatting a url into a markdown
 
+# PDF_PARSER
+
+- `pdf_parser/` folder contains script I used to parse data from al-qu'ran pdf file
