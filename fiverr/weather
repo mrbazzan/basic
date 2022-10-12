@@ -1,0 +1,86 @@
+#!/usr/bin/env python3
+#
+# SCRIPT TO GET WEATHER INFORMATION OF A LOCATION FOR SPECIFIC DATE
+#            USING weatherapi.com's API
+#
+import argparse
+import requests
+
+ACCESS_KEY='' # ACCESS KEY SHOULD BE HERE
+
+def date_format(date):
+    day, month, year = date.split("/")
+    # TODO: February has 28 or 29 days. Incorporate that in.
+    if len(day) < 1 or len(day) >= 31:
+        raise argparse.ArgumentTypeError("day should be between 1 and 31")
+    if len(month) < 1 or len(month) > 12:
+        raise argparse.ArgumentTypeError("month should be between 1 and 12")
+    if len(year) < 4:
+        raise argparse.ArgumentTypeError("full year format required e.g 2022")
+    return year, month, day
+
+
+parser = argparse.ArgumentParser(
+    conflict_handler="resolve",
+    description="Get weather data"
+)
+
+parser.add_argument(
+    "--location",
+    help="the location which the weather details is derived",
+    default="Spokane, WA"
+)
+
+parser.add_argument(
+    "--date",
+    help="date with format: DD/MM/YYYY",
+    type=date_format,
+)
+
+
+args = parser.parse_args()
+while True:
+    if args.date is None:
+        input_date = input("Enter date with format (DD/MM/YYYY): ")
+        if input_date == '':
+            continue
+        args.date = date_format(input_date)
+
+    location = args.location.split(',')
+    if len(location) == 1:
+        location = args.location
+    else:
+        location = ','.join(list(map(lambda x: x.strip(), location)))
+
+    url = "https://api.weatherapi.com/v1/forecast.json?" + \
+        f"key={ACCESS_KEY}"+ \
+        f"&q='{location}'" + \
+        f"&dt={'-'.join(args.date)}" + \
+        "&days=5"
+    print(url)
+
+    try:
+        api = requests.get(url)
+    except requests.ConnectionError as e:
+        raise Exception("No internet connection")
+
+    content = api.json()
+    print("NAME: ", content['location']['name'])
+    print("REGION: ", content['location']['region'])
+    print("COUNTRY: ", content['location']['country'])
+    print('\n')
+
+    hourly_data = content["forecast"]["forecastday"][0]["hour"]
+
+    for data in hourly_data:
+        time = data["time"]
+        temp = str(data["temp_c"]) + "°C"
+        humidity = str(data["humidity"]) + "%"
+        print(time, temp, humidity)
+        print('\n')
+
+    quit = input("Do you want to quit? (Y/y): ")
+    if quit == 'y' or quit == 'Y':
+        break
+    args.date = None
+
