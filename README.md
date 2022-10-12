@@ -16,7 +16,7 @@
 # DATA STRUCTURE AND ALGORITHM
 
 - Buying ticket from window problem
-
+- array additon from CoderByte
 
 # Helper
 
