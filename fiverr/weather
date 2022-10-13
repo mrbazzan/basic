@@ -71,7 +71,11 @@ while True:
     print("COUNTRY: ", content['location']['country'])
     print('\n')
 
-    hourly_data = content["forecast"]["forecastday"][0]["hour"]
+    hourly_data = []
+    forecast_data = content["forecast"]["forecastday"]
+
+    if forecast_data:
+        hourly_data = forecast_data[0]["hour"]
 
     for data in hourly_data:
         time = data["time"]
@@ -79,6 +83,9 @@ while True:
         humidity = str(data["humidity"]) + "%"
         print(time, temp, humidity)
         print('\n')
+
+    if not hourly_data:
+        print("Weather data is not present\n")
 
     quit = input("Do you want to quit? (Y/y): ")
     if quit == 'y' or quit == 'Y':
