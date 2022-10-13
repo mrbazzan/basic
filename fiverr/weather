@@ -15,6 +15,20 @@ URL = """
 ACCESS_KEY='' # ACCESS KEY SHOULD BE HERE
 
 
+def get_data(state, location, date):
+
+    url = URL.format(state=state, access_key=ACCESS_KEY, location=location,
+                     find_date=date)
+    print(url)
+
+    try:
+        api = requests.get(url)
+    except requests.ConnectionError as e:
+        raise Exception("No internet connection")
+
+    return api.json()
+
+
 def date_format(date):
     if date.count('/') != 2:
         raise argparse.ArgumentTyepError("Date format is DD/MM/YYYY")
@@ -62,17 +76,7 @@ while True:
     else:
         location = ','.join(list(map(lambda x: x.strip(), location)))
 
-    url = URL.format(state="forecast", access_key=ACCESS_KEY,
-                     location=location, find_date='-'.join(args.date))
-    print(url)
-
-    try:
-        api = requests.get(url)
-    except requests.ConnectionError as e:
-        raise Exception("No internet connection")
-
-    content = api.json()
-
+    content = get_data("history", location, '-'.join(args.date))
     if "error" in content:
         print(content["error"]["message"] + "\n")
         args.date = None
