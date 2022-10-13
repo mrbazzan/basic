@@ -16,6 +16,9 @@ ACCESS_KEY='' # ACCESS KEY SHOULD BE HERE
 
 
 def date_format(date):
+    if date.count('/') != 2:
+        raise argparse.ArgumentTyepError("Date format is DD/MM/YYYY")
+
     day, month, year = date.split("/")
     # TODO: February has 28 or 29 days. Incorporate that in.
     if len(day) < 1 or len(day) >= 31:
@@ -49,7 +52,7 @@ args = parser.parse_args()
 while True:
     if args.date is None:
         input_date = input("Enter date with format (DD/MM/YYYY): ")
-        if input_date == '':
+        if input_date.count('/') != 2:
             continue
         args.date = date_format(input_date)
 
