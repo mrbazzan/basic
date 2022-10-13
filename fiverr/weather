@@ -41,7 +41,7 @@ def date_format(date):
         raise argparse.ArgumentTypeError("month should be between 1 and 12")
     if len(year) != 4:
         raise argparse.ArgumentTypeError("full year format required e.g 2022")
-    return year, month, day
+    return date
 
 
 parser = argparse.ArgumentParser(
@@ -76,7 +76,8 @@ while True:
     else:
         location = ','.join(list(map(lambda x: x.strip(), location)))
 
-    content = get_data("history", location, '-'.join(args.date))
+    _date_ = '-'.join(args.date.split('/')[-1::-1])
+    content = get_data("history", location, _date_)
     if "error" in content:
         print(content["error"]["message"] + "\n")
         args.date = None
