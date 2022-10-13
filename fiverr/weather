@@ -94,10 +94,10 @@ while True:
         hourly_data = forecast_data[0]["hour"]
 
     for data in hourly_data:
-        time = data["time"]
+        data_time = data["time"]
         temp = str(data["temp_f"]) + "°F"
         humidity = str(data["humidity"]) + "%"
-        print(time, temp, humidity)
+        print(data_time, temp, humidity)
         print('\n')
 
     if not hourly_data:
