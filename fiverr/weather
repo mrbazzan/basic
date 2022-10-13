@@ -72,6 +72,12 @@ while True:
         raise Exception("No internet connection")
 
     content = api.json()
+
+    if "error" in content:
+        print(content["error"]["message"] + "\n")
+        args.date = None
+        continue
+
     print("NAME: ", content['location']['name'])
     print("REGION: ", content['location']['region'])
     print("COUNTRY: ", content['location']['country'])
