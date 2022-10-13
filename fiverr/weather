@@ -7,7 +7,13 @@
 import argparse
 import requests
 
+
+URL = """
+   https://api.weatherapi.com/v1/{state}.json?key={access_key}&q='{location}'&dt={find_date}&days=5
+""".strip()
+
 ACCESS_KEY='' # ACCESS KEY SHOULD BE HERE
+
 
 def date_format(date):
     day, month, year = date.split("/")
@@ -53,11 +59,8 @@ while True:
     else:
         location = ','.join(list(map(lambda x: x.strip(), location)))
 
-    url = "https://api.weatherapi.com/v1/forecast.json?" + \
-        f"key={ACCESS_KEY}"+ \
-        f"&q='{location}'" + \
-        f"&dt={'-'.join(args.date)}" + \
-        "&days=5"
+    url = URL.format(state="forecast", access_key=ACCESS_KEY,
+                     location=location, find_date='-'.join(args.date))
     print(url)
 
     try:
