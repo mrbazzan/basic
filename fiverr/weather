@@ -75,7 +75,7 @@ while True:
 
     for data in hourly_data:
         time = data["time"]
-        temp = str(data["temp_c"]) + "°C"
+        temp = str(data["temp_f"]) + "°F"
         humidity = str(data["humidity"]) + "%"
         print(time, temp, humidity)
         print('\n')
