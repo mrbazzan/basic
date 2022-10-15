@@ -4,9 +4,14 @@
 # SCRIPT TO GET WEATHER INFORMATION OF A LOCATION FOR SPECIFIC DATE
 #            USING weatherapi.com's API
 #
+import time
 import argparse
 import requests
 
+
+_DATE_FORMAT = "%d/%m/%Y"
+present_date = time.strftime(_DATE_FORMAT, time.localtime())
+PRESENT_DATE = time.mktime(time.strptime(present_date, _DATE_FORMAT))
 
 URL = """
    https://api.weatherapi.com/v1/{state}.json?key={access_key}&q='{location}'&dt={find_date}&days=5
@@ -70,6 +75,8 @@ while True:
             continue
         args.date = date_format(input_date)
 
+    user_date_in_float = time.mktime(time.strptime(args.date, _DATE_FORMAT))
+
     location = args.location.split(',')
     if len(location) == 1:
         location = args.location
@@ -77,7 +84,11 @@ while True:
         location = ','.join(list(map(lambda x: x.strip(), location)))
 
     _date_ = '-'.join(args.date.split('/')[-1::-1])
-    content = get_data("history", location, _date_)
+    if user_date_in_float < PRESENT_DATE:
+        content = get_data("history", location, _date_)
+    else:
+        content = get_data("forecast", location, _date_)
+
     if "error" in content:
         print(content["error"]["message"] + "\n")
         args.date = None
