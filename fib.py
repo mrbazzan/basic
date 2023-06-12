@@ -13,11 +13,10 @@ def fib(n):
 
 # memoization
 
-def fibonacci(n, memory={1:1, 2:2}):
+def fibonacci(n, memory={1:1, 2:1}):
     if n in memory: return memory[n]
     memory[n] = fibonacci(n-1, memory) + fibonacci(n-2, memory)
 
-    print(memory)
     return memory[n]
 
 
