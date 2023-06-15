@@ -20,7 +20,7 @@ def howSum(targetSum, numbers, memory={}):
         if remainder in memory:
             return memory[remainder]
 
-        answer = howSum(remainder, numbers)
+        answer = howSum(remainder, numbers, memory)
         memory[remainder] = answer
 
         if answer is not None:
