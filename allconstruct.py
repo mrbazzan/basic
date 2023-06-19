@@ -9,22 +9,17 @@
 #
 # elements of "wordBank" can be re-used
 
-def allConstruct(target, wordBank, memory={}):
-    if target in memory:
-        return memory[target]
-
+def allConstruct(target, wordBank):
     if target == "":
         return [[]]
 
     total = []
     for element in wordBank:
         if target.startswith(element):
-            result = allConstruct(target[len(element):], wordBank, memory)
+            result = allConstruct(target[len(element):], wordBank)
             for seq in result:
-                seq.insert(0, element)
-                total.append(seq)
+                total.append([element, *seq])
 
-    memory[target] = total
     return total
 
 
@@ -43,7 +38,6 @@ print(allConstruct("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeef", [
     "eeeeee"
 ]))
 
-
 #===================allConstruct===========================
 #
-# NOTE: Allegedly, memoization does not have a lot of impact.
+# NOTE: memoization does not have a lot of impact.
