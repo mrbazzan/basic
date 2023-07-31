@@ -7,6 +7,9 @@ d = ["2023-07-01", "2023-07-02", "2023-07-03", "2023-07-04", "2023-07-05"]
 # values for y-axis
 stock_prices = [100, 110, 120, 105, 115]
 
+
+# plt.figure(figsize=(10, 6))
+
 # plot the data
 plt.plot(
     d,
