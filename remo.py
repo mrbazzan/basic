@@ -1,25 +1,32 @@
 
+import matplotlib.pyplot as plt
 
-def median_price(prices):
-    # find the number of the prices
-    length = len(prices)
+# values for x-axis
+d = ["2023-07-01", "2023-07-02", "2023-07-03", "2023-07-04", "2023-07-05"]
 
-    # sort the prices in ascending order
-    sorted_price = sorted(prices)
-
-    # find the quotient (whole number gotten from the result of division)
-    mid = length // 2
-
-    # check if the length is odd or even.
-    # if it is odd, the median is the middle value
-    # if it is even, the median is the average of the middle
-    # value and the number before the middle value
-    if length % 2 != 0:
-        return sorted_price[mid]
-    else:
-        return (sorted_price[mid-1] + sorted_price[mid])/2
-
-# Driver code
+# values for y-axis
 stock_prices = [100, 110, 120, 105, 115]
-print("The median price is: " + str(median_price(stock_prices)))
+
+# plot the data
+plt.plot(
+    d,
+    stock_prices,
+    marker="o",
+    linestyle="-",
+    color="b",
+    label="Stock Price"
+)
+
+# set the name of x and y axis
+plt.xlabel("Date")
+plt.ylabel("Price")
+
+plt.grid(True)
+plt.legend()
+
+# fit plot within figure cleanly.
+plt.tight_layout()
+
+# display the line plot
+plt.show()
 
