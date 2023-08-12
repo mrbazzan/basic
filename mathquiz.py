@@ -1,32 +1,33 @@
 import random
 from sys import exit
 
-
-name = input("Enter your name: ")
-print(f"Hello, {name}! Welcome to the maths quiz game")
-
-
-def randomNum():
-    numberOne = random.randint(1, 10)
-    numberTwo = random.randint(1, 10)
-    return numberOne, numberTwo
-
-
-def game(numberOne, numberTwo):
-
+def game(number_one: int, sign: int, number_two: int):
     global STORELIST
-    STORELIST = [numberOne, numberTwo]
+    STORELIST = [number_one, sign, number_two]
 
-    realAnswer = numberOne + numberTwo
+    signs = {1: "+", 2: "-", 3: "*"}
+    try:
+        user_answer = int(input("{} {} {} = ".format(number_one, signs.get(sign), number_two)))
+    except ValueError:
+        print("You should have entered a valid number")
+        exit()
 
-    userAnswer = int(input("{} + {} = ".format(numberOne, numberTwo)))
-    return userAnswer, realAnswer
+    if sign == 1:
+        real_answer = number_one + number_two
+    elif sign == 2:
+        real_answer = number_one - number_two
+    elif sign == 3:
+        real_answer = number_one * number_two
+    else:
+        print("Invalid sign")
+        exit()
 
+    return user_answer, real_answer
 
-def quiz(userAnswer, realAnswer):
+def quiz(user_answer: int, real_answer: int):
     play = "y"
     while play == "y":
-        if userAnswer == realAnswer:
+        if user_answer == real_answer:
             print("GOOD JOB!")
             choice = input("Do you want to continue? (y/n) ").lower()
             while choice not in ['y', 'n']:
@@ -38,14 +39,20 @@ def quiz(userAnswer, realAnswer):
                 exit()
         else:
             print("Try Again")
-            answer1, answer2 = game(STORELIST[0], STORELIST[1])
-            quiz(answer1, answer2)
-
+            first, second = game(STORELIST[0], STORELIST[1], STORELIST[2])
+            quiz(first, second)
 
 def main():
-    random1, random2 = randomNum()
-    val1, val2 = game(random1, random2)
-    quiz(val1, val2)
+    sign = int(input(
+        "Enter the type of quiz: 1. Addition, 2. Subtraction, 3.Multiplication\n"
+    ))
+    while sign not in [1, 2, 3]:
+        sign = int(input(
+            "Enter the type of quiz: 1. Addition, 2. Subtraction, 3.Multiplication\n"
+        ))
+    first, second = game(random.randint(1, 10), sign, random.randint(1, 10))
+    quiz(first, second)
 
-
+name = input("Enter your name: ")
+print(f"Hello, {name}! Welcome to the maths quiz game")
 main()
