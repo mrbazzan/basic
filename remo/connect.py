@@ -11,7 +11,13 @@ def test_connectivity():
 
   def check_url():
       web = (url.get())
-      status_code = urllib.request.urlopen(web).getcode()
+
+      status_code = None
+      try:
+          status_code = urllib.request.urlopen(web).getcode()
+      except Exception:
+          print("url does not exist")
+
       website_is_up = status_code == 200
 
       if website_is_up:
