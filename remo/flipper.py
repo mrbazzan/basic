@@ -10,6 +10,13 @@ def create_gui():
         colors = ["red", "green", "blue", "yellow", "orange"]
         label.configure(background=random.choice(colors))
 
+    def set_color_to_red():
+        label.configure(background="red")
+
+    def set_color_to_blue():
+        label.configure(background="blue")
+
+
     label = tk.Label(
         root,
         text="Click to flip colors",
@@ -23,6 +30,18 @@ def create_gui():
         text="Flip Colors", command=flip_colors
     )
     button.grid(row=1, column=1, padx=10, pady=10)
+
+    button1 = tk.Button(
+        root,
+        text="Set Color to Red", command=set_color_to_red
+    )
+    button1.grid(row=1, column=0, padx=10, pady=10)
+
+    button2 = tk.Button(
+        root, text="Set Color to Blue",
+        command=set_color_to_blue
+    )
+    button2.grid(row=1, column=2, padx=10, pady=10)
 
     root.mainloop()
 
