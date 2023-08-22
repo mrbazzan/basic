@@ -5,7 +5,7 @@ class Profit {
 	int a[] = {110, 120, 80, 120, 10, 100};
         System.out.println(maxProfit(a));
     }
-    
+
     public static int maxProfit(int stockPrices[]) {
         int maxProfit = 0;
         int minStockPrice = Integer.MAX_VALUE;
