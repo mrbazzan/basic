@@ -14,3 +14,5 @@ text
 pdf_parser/stevo
 
 venv_pdf/
+
+scheme/mit-scheme-12.1/*
