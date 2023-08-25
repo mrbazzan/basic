@@ -16,3 +16,14 @@
   )
 )
 
+
+; atend 4 `(5 6 9)
+; (cons 5 (cons 6 (cons 4 `())))
+
+(define (atend x l)
+  (if (null? l)
+      (cons x l)
+      (cons (car l) ( atend x (cdr l)) )
+  )
+)
+
