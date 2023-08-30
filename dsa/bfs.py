@@ -38,19 +38,23 @@ def find_point(maze, point):
     raise Exception(f"'{point}' not in maze")
 
 
+def update_coordinate(char, i, j):
+    if char == 'L':
+        j = j - 1
+    elif char == 'R':
+        j = j + 1
+    elif char == 'U':
+        i = i - 1
+    elif char == 'D':
+        i = i + 1
+    return i, j
+
+
 def print_maze(maze, point, path=''):
     i, j = find_point(maze, point)
 
     for char in path[:-1]:
-        if char == 'L':
-            j = j - 1
-        elif char == 'R':
-            j = j + 1
-        elif char == 'U':
-            i = i - 1
-        elif char == 'D':
-            i = i + 1
-
+        i, j = update_coordinate(char, i, j)
         maze[i][j] = '+'
 
     print('\n'.join([' '.join(line) for line in maze]))
@@ -59,14 +63,7 @@ def print_maze(maze, point, path=''):
 def resolve_path_coordinate(x, i, j):
     # print(x)
     for char in x:
-        if char == 'L':
-            j = j - 1
-        elif char == 'R':
-            j = j + 1
-        elif char == 'U':
-            i = i - 1
-        else:
-            i = i + 1
+        i, j = update_coordinate(char, i, j)
     return i, j
 
 
