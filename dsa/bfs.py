@@ -38,8 +38,8 @@ def find_point(maze, point):
     raise Exception(f"'{point}' not in maze")
 
 
-def print_maze(maze, path=''):
-    i, j = find_point(maze, 'O')
+def print_maze(maze, point, path=''):
+    i, j = find_point(maze, point)
 
     for char in path[:-1]:
         if char == 'L':
@@ -134,5 +134,5 @@ while start != 'X':
     start = maze[first][second]
 
 
-print_maze(maze, path=x)
+print_maze(maze, 'O', path=x)
 
