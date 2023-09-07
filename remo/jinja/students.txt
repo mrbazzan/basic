@@ -1,0 +1,7 @@
+{# students.txt #}
+Hello {{ name }}!
+
+I'm happy to inform you that you did very well on today's examination.
+You reached {{ score }} out of {{ max_score }} points.
+
+Well done!
