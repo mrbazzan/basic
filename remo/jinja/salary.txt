@@ -1,0 +1,5 @@
+Hello {{ name }}!
+
+I'm happy to inform you that a sum of {{ bonus }} has been added to your salary. Your new salary is now {{ salary }}
+
+Good day!
