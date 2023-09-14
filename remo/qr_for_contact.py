@@ -1,5 +1,3 @@
-import matplotlib.pyplot as plt
-
 from pathlib import Path
 from segno import helpers
 
@@ -31,11 +29,13 @@ path = Path(p, filename)
 img.save(path)
 print(f"vCard QR code, {filename} saved to file")
 
-histogram = img.histogram()
-plt.hist(histogram, bins=len(histogram))
-plt.xlabel('Histogram')
+# Resize the image to half its size
+resize_img = img.resize((img.width // 2, img.height // 2))
 
-# path to save the histogram
-hist_path = Path(p, "hist.png")
-plt.savefig(hist_path)
-print(f"vCard QR Code tonal graph, hist.png saved to file")
+# Path to save the resized image
+resize_path = Path(p, "donbazz_resize.png")
+resize_img.save(resize_path)
+print(f"vCard QR Code resized, donbazz_resize.png saved to file")
+
+# Find the difference between the size of its actual QR image and its resized image
+print(f"The difference is {path.stat().st_size - resize_path.stat().st_size}B")
