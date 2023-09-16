@@ -56,9 +56,29 @@ def create_scatter_plot(data):
 
     return plt
 
+def create_line_plot(data):
+    plt.figure(figsize=(20, 6))
+
+    countries_starting_with_d = [c for c in data if c[0].lower().startswith('d')]
+    c, gdp = [], []
+    for country in countries_starting_with_d:
+        c.append(country[0])
+
+        # convert gdb to float. e.g
+        # 18.56 Billion -> 18.56
+        gdp.append(float(country[4].split(' ')[0]))
+
+    plt.plot(c, gdp)
+
+    plt.xlabel('Country Code')
+    plt.ylabel('GDP(1e9)')
+    plt.title('GDP Line Plot of Countries Starting with "D"')
+
+    return plt
+
 if __name__ == "__main__":
     url = "https://countrycode.org"
     data = scrape_data(url)
-    plt = create_scatter_plot(data)
+    plt = create_line_plot(data)
     print("Use `.show()` on `plt` to display the figure")
-
+    plt.show()
