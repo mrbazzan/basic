@@ -1,3 +1,4 @@
+import csv
 import requests
 import matplotlib.pyplot as plt
 
@@ -38,47 +39,16 @@ def scrape_data(url):
 
     return countries
 
-def create_scatter_plot(data):
-    plt.figure(figsize=(20, 6))
-
-    countries_with_a  = [c for c in data if c[0].lower().startswith('a')]
-    countries, population = [], []
-    for country in countries_with_a:
-        c = country[0]
-        # convert comma seperated digit to float. e.g
-        # 12,345 -> 12345.0
-        population = float(''.join(country[3].split(',')))
-        plt.scatter(c, population)
-
-    plt.xlabel('Country Code')
-    plt.ylabel('Population(1e7)')
-    plt.title('Population Scatter Plot of Countries Starting with "A"')
-
-    return plt
-
-def create_line_plot(data):
-    plt.figure(figsize=(20, 6))
-
-    countries_starting_with_d = [c for c in data if c[0].lower().startswith('d')]
-    c, gdp = [], []
-    for country in countries_starting_with_d:
-        c.append(country[0])
-
-        # convert gdb to float. e.g
-        # 18.56 Billion -> 18.56
-        gdp.append(float(country[4].split(' ')[0]))
-
-    plt.plot(c, gdp)
-
-    plt.xlabel('Country Code')
-    plt.ylabel('GDP(1e9)')
-    plt.title('GDP Line Plot of Countries Starting with "D"')
-
-    return plt
+def save_to_csv(data, filename):
+    with open(filename, mode='w', newline='', encoding='utf-8') as f:
+        writer = csv.writer(f)
+        writer.writerow(['Country Name', 'Country Code', 'Population', 'Area', 'GDP'])
+        for row in data:
+            writer.writerow(row)
 
 if __name__ == "__main__":
     url = "https://countrycode.org"
     data = scrape_data(url)
-    plt = create_line_plot(data)
-    print("Use `.show()` on `plt` to display the figure")
-    plt.show()
+
+    save_to_csv(data, "countries.csv")
+    print("File saved to countries.csv")
