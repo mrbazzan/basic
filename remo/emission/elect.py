@@ -1,20 +1,25 @@
-import csv 
+import csv
 
-# load data from the csv file 
-with open('electricity.csv', 'r') as file:
-    reader = csv.reader(file)
-    data = list(reader)
+def extract_data(country):
+    with open('electricity.csv', 'r') as file:
+        reader = csv.reader(file)
+        data = list(reader)
 
-with open('nigeria.csv', 'w', newline='') as nigeria:
-    writer = csv.writer(nigeria)
+    with open(f'{country}.csv', 'w', newline='') as f:
+        writer = csv.writer(f)
 
-    # Write the header
-    writer.writerow(data[0])
+        # Write the header
+        writer.writerow(data[0])
 
-    # Write the data for Nigeria by iterating over the `data`
-    for row in data:
-        if row[0] == 'Nigeria':
-            writer.writerow(row)
+        # Write the data for the specified country
+        for row in data:
+            if row[0] == country:
+                writer.writerow(row)
 
-print('Data successfully extracted for Nigeria, and saved into nigeria.csv')
+    print(f'Data successfully extracted for {country}, and saved into {country}.csv')
+
+if __name__ == "__main__":
+    # Call the function to extract data for each country
+    extract_data('Moldova')
+    extract_data('Norway')
 
