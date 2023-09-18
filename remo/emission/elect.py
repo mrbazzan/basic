@@ -1,4 +1,5 @@
 import csv
+import argparse
 
 def extract_data(country):
     with open('electricity.csv', 'r') as file:
@@ -19,7 +20,18 @@ def extract_data(country):
     print(f'Data successfully extracted for {country}, and saved into {country}.csv')
 
 if __name__ == "__main__":
-    # Call the function to extract data for each country
-    extract_data('Moldova')
-    extract_data('Norway')
+    parser = argparse.ArgumentParser(
+        description='Extract electricity data for a given country'
+    )
+    parser.add_argument(
+        '--country',
+        required=True,
+        choices=[
+            'Mexico', 'Moldova', 'Netherlands',
+            'New Zealand', 'Nigeria', 'Norway',
+            'Pakistan', 'Portugal'],
+        help='Country for which to extract data'
+    )
+    args = parser.parse_args()
 
+    extract_data(args.country)
