@@ -11,17 +11,13 @@ except requests.exceptions.RequestException as e:
 # Parse content generated from the response
 soup = BeautifulSoup(response.text, 'html.parser')
 
-# Find data from the Statistics section
-stat_tags = soup.find(
-    'a', href="#collapseStatistics"
-).find_next("div").find_all("ul")
+# Find data from the URLs section
+urls_tag = soup.find(
+    'a', href="#collapseURLs"
+).find_next("div").find("ul")
 
-info = []
-for tag in stat_tags:
-    data = tag.find("li").getText()
-    if data.startswith(("Population", "Area", "GDP")):
-        info.append(data)
-
-for i in info:
-    print(i.strip())
+# Extract the urls 
+urls = urls_tag.text.strip().split('\n')
+for url in urls:
+    print("https://www." + url)
 
