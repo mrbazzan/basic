@@ -11,15 +11,17 @@ except requests.exceptions.RequestException as e:
 # Parse content generated from the response
 soup = BeautifulSoup(response.text, 'html.parser')
 
-# Find all the language tags in the Travel section
-language_tags = soup.find(
-    'a', href="#collapseTravel"
+# Find data from the Statistics section
+stat_tags = soup.find(
+    'a', href="#collapseStatistics"
 ).find_next("div").find_all("ul")
 
-# The fifth <ul> tag contains the languages
-languages = language_tags[5].find("li").text.split(',')
+info = []
+for tag in stat_tags:
+    data = tag.find("li").getText()
+    if data.startswith(("Population", "Area", "GDP")):
+        info.append(data)
 
-# Extract the language names and percentage of speakers
-for language in languages:
-    print(language.strip())
+for i in info:
+    print(i.strip())
 
