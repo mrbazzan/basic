@@ -1,6 +1,6 @@
 cffi==1.15.1
 charset-normalizer==2.1.1
-cryptography==41.0.3
+cryptography==41.0.4
 pdfminer.six==20220524
 pycparser==2.21
 beautifulsoup4==4.7.1
