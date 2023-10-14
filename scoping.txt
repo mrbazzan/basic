@@ -1,0 +1,87 @@
+SCOPING
+
+# global block
+x = int(input("Enter a number: "))
+if x > 5:
+    # block A
+    y = int(input("Enter a number: "))
+    if y > 10:
+        # block B
+        z = 10
+    else:
+        # block C
+        z = 5
+elif x < 0:
+    # block D
+    a = -5
+else:
+    # block E
+    b = 0
+
+print("?")
+
+IN block scope,
+    - variables are only available within the blocks
+      they are declared, including any other blocks
+      nested within that block.
+
+      In a blocked scope scenario, only "x" could be inserted
+      into the last print statement (it's actually an expression too,
+      but the return value is discarded?)
+
+      x - global, A, B, C, D, E
+      y - A, B, C
+      z - B, C (note that the z's are two different variables
+                in block scope)
+      a - D
+      b - E
+
+    #include <stdio.h>
+    int main(void){
+      int x = 2;
+      if (x < 2){
+	    b = 3;
+      }else{
+        b = 2;
+      }
+      printf("%d\n", b);
+    }
+
+    The example above shows block scoping, as it will throw
+    "error: use of undeclared identifier 'b'"
+
+IN function (local) scope,
+    - variables declared anywhere in a function are accessible
+      everywhere in that function AS SOON AS DECLARED OR GIVEN A VALUE
+
+      NB: any of the variables COULD be printed at the end but only
+      variables that have been given a value can be printed.
+
+      For the inital function, if x is greater than 5, and you try to print b,
+      you get NameError.
+
+      This is similar to LEXICAL SCOPE
+
+
+IN enclosing (or nonlocal) scope,
+    - enlosing scope exists only for nested functions in Python
+def outer():
+    var = 100  # a nonlocal variable
+
+    # enclosing scope
+
+    def inner():
+        print(var)
+        print(another_var)
+
+        # also "var" cannot be modified here unless
+        # eclared as nonlocal variable, like so "nonlocal var"
+
+    inner()
+    another_var = 7 # all variables created before calling inner()
+                    # are visible from inner(). So, another_var is
+                    # not visible since it is defined after calling inner()
+
+    print(var)
+
+outer()
