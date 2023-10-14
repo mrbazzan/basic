@@ -13,12 +13,6 @@
 
 - fiverr/weather - Script to get forecast data given location and date
 
-
-# DATA STRUCTURE AND ALGORITHM
-
-- Buying ticket from window problem
-- array additon from CoderByte
-
 # Helper
 
 - `helper/` folder contains script I used for formatting a url into a markdown
