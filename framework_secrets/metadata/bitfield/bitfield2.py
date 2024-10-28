@@ -5,15 +5,6 @@ class bit_property:
     def __init__(self, enum):
         self.enum = enum
 
-    def get_property(self):
-        def getter(obj):
-            return bool(obj.style & self.enum)
-        def setter(obj, v):
-            return setattr(obj, 'style',
-                obj.style | self.enum if v else
-                obj.style ^ self.enum
-            )
-        return property(getter, setter)
 
 class __bitproperties__(type):
     def __new__(meta, classname, bases, class_dict):
@@ -22,7 +13,16 @@ class __bitproperties__(type):
                     if isinstance(item[1], bit_property))
 
         for attr, props in bitprops:
-            class_dict[attr] = props.get_property()
+            def get_property(enum):
+                def getter(self):
+                    return bool(self.style & enum)
+                def setter(self, v):
+                    return setattr(self, 'style',
+                        self.style | enum if v else
+                        self.style ^ enum
+                    )
+                return property(getter, setter)
+            class_dict[attr] = get_property(props.enum)
 
         return super().__new__(meta, classname, bases, class_dict)
 
