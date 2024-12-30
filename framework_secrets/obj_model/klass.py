@@ -31,3 +31,13 @@ class Class(Base):
         self.name = name
         self.base_class = base_class
 
+
+# Base class for all objects
+OBJECT = Class(name="object", base_class=None, fields={}, metaclass=None)
+
+TYPE = Class(name="type", base_class=OBJECT, fields={}, metaclass=None)
+
+# Everything is an instance of TYPE
+TYPE.cls = TYPE
+OBJECT.cls = TYPE
+
