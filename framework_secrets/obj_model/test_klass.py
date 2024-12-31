@@ -2,6 +2,9 @@
 import unittest
 from klass import Class, Instance, OBJECT, TYPE
 
+# To run:
+#   python -m unittest test_klass.py
+
 class TestObjectModel(unittest.TestCase):
     def test_read_and_write_field(self):
     
@@ -48,3 +51,24 @@ class TestObjectModel(unittest.TestCase):
         self.assertEqual(B.read_attr('a'), 1)
         B.write_attr('a', 6)
         self.assertEqual(B.read_attr('a'), 6)
+
+    def test_instance(self):
+        # Normal PYTHON IMPL.
+        class A:
+            pass
+        class B(A):
+            pass
+        b = B()
+        self.assertIsInstance(b, B)
+        self.assertIsInstance(b, A)
+        self.assertIsInstance(b, object)
+        self.assertFalse(isinstance(b, type))
+
+        # Custom IMPL.
+        _A = Class(name='_A', base_class=OBJECT, fields={}, metaclass=TYPE)
+        _B = Class(name='_B', base_class=_A, fields={}, metaclass=TYPE)
+        _b = Instance(_B)
+        self.assertTrue(_b.isinstance(_B))
+        self.assertTrue(_b.isinstance(_A))
+        self.assertTrue(_b.isinstance(OBJECT))
+        self.assertFalse(_b.isinstance(TYPE))

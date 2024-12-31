@@ -5,6 +5,9 @@ class Base:
         self.cls = cls
         self._fields = fields
 
+    def isinstance(self, cls):
+        return self.cls.issubclass(cls)
+
     def _read_dict(self, field_name):
         return self._fields.get(field_name, MISSING)
 
@@ -30,6 +33,15 @@ class Class(Base):
         Base.__init__(self, metaclass, fields)
         self.name = name
         self.base_class = base_class
+
+    def mro(self):
+        if self.base_class is None:
+            return [self]
+        else:
+            return [self] + self.base_class.mro()
+
+    def issubclass(self, cls):
+        return cls in self.mro()
 
 
 # Base class for all objects
