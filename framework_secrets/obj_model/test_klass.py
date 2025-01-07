@@ -134,3 +134,36 @@ class TestObjectModel(unittest.TestCase):
         _b = Instance(_B)
         _b.write_attr('x', 1)
         self.assertEqual(_b.call_method('f', 2), 5)
+
+    def test_bound_method(self):
+        # Normal PYTHON IMPL
+        class A:
+            def f(self, a):
+                return self.x + a + 1
+        obj = A()
+        obj.x = 2
+        method = obj.f
+        self.assertEqual(method(4), 7)
+
+        class B(A):
+            pass
+        B_obj = B()
+        B_obj.x = 1
+        B_method = B_obj.f
+        self.assertEqual(B_method(10), 12)
+
+        # Custom IMPL.
+        def f_A(self, arg):
+            return self.read_attr('x') + arg + 1
+
+        _A = Class(name="_A", base_class=OBJECT, fields={'f': f_A}, metaclass=TYPE)
+        _a = Instance(_A)
+        _a.write_attr('x', 2)
+        method_a = _a.read_attr('f')
+        self.assertEqual(method_a(4), 7)
+
+        _B = Class(name="_B", base_class=_A, fields={}, metaclass=TYPE)
+        _b = Instance(_B)
+        _b.write_attr('x', 1)
+        _b_method = _b.read_attr('f')
+        self.assertEqual(_b_method(10), 12)

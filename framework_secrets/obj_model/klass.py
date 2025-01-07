@@ -9,8 +9,8 @@ class Base:
         return self.cls.issubclass(cls)
 
     def call_method(self, method_name, *args):
-        method = self.cls._read_from_class(method_name)
-        return method(self, *args)
+        method = self.read_attr(method_name)
+        return method(*args)
 
     def _read_dict(self, field_name):
         return self._fields.get(field_name, MISSING)
@@ -19,7 +19,18 @@ class Base:
         self._fields[field_name] = value
 
     def read_attr(self, field_name):
-        return self._read_dict(field_name)
+        result = self._read_dict(field_name)
+        if result is not MISSING:
+            return result
+
+        result = self.cls._read_from_class(field_name)
+        if callable(result):
+            return lambda *arg: result(self, *arg)
+
+        if result is not MISSING:
+            return result
+
+        raise AttributeError(field_name)
 
     def write_attr(self, field_name, value):
         self._write_dict(field_name, value)
