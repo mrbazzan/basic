@@ -9,9 +9,9 @@ def find(cls, method_name):
         cls = cls["parent"]
     raise NotImplementedError(f"{method_name} does not exist")
 
-def call(thing, method_name, *args):
+def call(thing, method_name, *args, **kwargs):
     method = find(thing["_class"], method_name)
-    return method(thing, *args)
+    return method(thing, *args, **kwargs)
 
 def square_perimeter(thing):
     return 4 * thing["side"]
