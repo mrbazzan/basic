@@ -1,10 +1,10 @@
 
 from obj import (
     make, call,
-    Square, Circle
+    Square, Rectangle
 )
 
-examples = [make(Square, "sq", 3), make(Circle, "ci", 2)]
+examples = [make(Square, "sq", 3), make(Rectangle, "rect", 3, 4)]
 for ex in examples:
     n = ex["name"]
     d = call(ex, "density", 5)
