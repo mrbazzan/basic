@@ -25,11 +25,14 @@ def merge(seqs):
 def mro(k):
     def inner(klass):
         b = []
+        if not klass: return b
+
         for k in klass:
             b += [[k] + inner(k.__bases__)]
-        return b
+        return merge(b)
 
     return merge([[k]] + [inner(k.__bases__)] + [list(k.__bases__)])
+    # return merge([[k]] + list(map(mro, k.__bases__)) + [list(k.__bases__)])
 
 class Example:
     class D: pass
@@ -41,4 +44,4 @@ class Example:
     class A(B,C): pass
 
 
-import pprint; pprint.pprint(mro(Example.C))
+import pprint; pprint.pprint(mro(Example.A))
