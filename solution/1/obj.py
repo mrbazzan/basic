@@ -41,6 +41,15 @@ def rect_new(name, side_a, side_b):
         "_class": Rectangle,
     }
 
+#TODO: Prime to be converted to static method
+def piece_content(thing, content=""):
+    if content in ["a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2"]:
+        return "pawn"
+    return "not sure"
+
+def piece_new(thing):
+    pass
+
 Shape = {
     "density": shape_density,
     "_new": shape_new,
@@ -48,16 +57,23 @@ Shape = {
     "_classname": "Shape",
 }
 
+Piece = {
+    "content": piece_content,
+    "_new": piece_new,
+    "parent": (Shape,),
+    "_classname": "Piece",
+}
+
 Rectangle = {
     "area": rect_area,
     "perimeter": rect_perimeter,
     "_new": rect_new,
-    "parent": Shape,
+    "parent": (Shape,),
     "_classname": "Rectangle",
 }
 
 Square = {
     "_new": square_new,
-    "parent": Rectangle,
+    "parent": (Rectangle,),
     "_classname": "Square",
 }
