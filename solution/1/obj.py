@@ -32,10 +32,10 @@ def make(cls, *args):
     return cls["_new"](*args)
 
 def find(cls, method_name):
-    while cls is not None:
-        if method_name in cls:
-            return cls[method_name]
-        cls = cls["parent"]
+    mro = cls["_mro"](cls)
+    for klass in mro:
+        if method_name in klass:
+            return klass[method_name]
     raise NotImplementedError(f"{method_name} does not exist")
 
 def call(thing, method_name, *args, **kwargs):
@@ -107,6 +107,6 @@ Rectangle = {
 Square = {
     "_new": square_new,
     "_mro": cls_mro,
-    "parent": (Rectangle,),
+    "parent": (Rectangle, Piece),
     "_classname": "Square",
 }
