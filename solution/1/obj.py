@@ -13,16 +13,9 @@ def call(thing, method_name, *args, **kwargs):
     method = find(thing["_class"], method_name)
     return method(thing, *args, **kwargs)
 
-def square_perimeter(thing):
-    return 4 * thing["side"]
-
-def square_area(thing):
-    return thing["side"] ** 2
-
 def square_new(name, side):
     # Inheritance trick
-    return make(Shape, name) | {
-        "side": side,
+    return make(Rectangle, name, side, side) | {
         "_class": Square,
     }
 
@@ -64,9 +57,7 @@ Rectangle = {
 }
 
 Square = {
-    "perimeter": square_perimeter,
-    "area": square_area,
     "_new": square_new,
-    "parent": Shape,
+    "parent": Rectangle,
     "_classname": "Square",
 }
