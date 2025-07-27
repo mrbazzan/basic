@@ -1,0 +1,21 @@
+
+STATIC METHOD AND CLASS METHOD
+
+def staticmethod():
+    return 'staticmethod'
+
+def classmethod(cls):
+    return cls
+
+class Dude:
+    staticmethod = StaticMethod(staticmethod)
+    classmethod = ClassMethod(classmethod)
+
+
+For staticmethod (it does not take an instance of class or the object itself)
+Dude().staticmethod() --> 'staticmethod'
+Dude.staticmethod() --> 'staticmethod'
+
+For classmethod (it takes the class of the object as the first argument)
+Dude().classmethod() --> '__main__.Dude'
+Dude.classmethod() --> '__main__.Dude'
