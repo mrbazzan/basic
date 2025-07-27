@@ -36,7 +36,10 @@ class Game:
 
 
 if __name__ == "__main__":
-    print(Game.d6)
+    print(Game.d6)  # obj is None because the attribute
+                    # is accessed on the class
+
+    Game.d6 = 5
 
     g = Game()
     print(g.d6)
