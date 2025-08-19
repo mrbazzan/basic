@@ -1,14 +1,24 @@
 
 class NonBlank:
-    def __init__(self, storage_name):
-        self.storage_name = storage_name
+    count = 0
+
+    def __init__(self):
+        cls = self.__class__
+        self.storage_name = f"{cls}_{cls.count}"
+        cls.count += 1
 
     def __set__(self, instance, value):
         if not isinstance(value, str):
-            raise TypeError("'email' must be of type 'str'")
+            raise TypeError("'NonBlank' must be of type 'str'")
         elif len(value) == 0:
-            raise ValueError("'email' must not be empty")
+            raise ValueError("'NonBlank' must not be empty")
         instance.__dict__[self.storage_name] = value
+
+    def __get__(self, instance, owner):
+        if instance is None:
+            return self
+        else:
+            return getattr(instance, self.storage_name)
 
 
 class Customer:
@@ -22,7 +32,7 @@ class Customer:
     >>> x = Customer('Abass', 99)
     Traceback (most recent call last):
     ...
-    TypeError: 'email' must be of type 'str'
+    TypeError: 'NonBlank' must be of type 'str'
     """
 
     # NB: We don't want million instances of NonBlank
@@ -38,8 +48,9 @@ class Customer:
     # >>> ex = Ex("example")
     # >>> ex.name
     # It returns an instance of NonBlank not "example"
-    name = NonBlank("name")
-    email = NonBlank("email")
+
+    name = NonBlank()
+    email = NonBlank()
 
     def __init__(self, name, email, fidelity=0):
         self.name = name
